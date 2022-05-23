@@ -26,6 +26,7 @@ if __name__ == '__main__':
         except TypeError and ValueError:
             print('Zeskanowano nieprawidłowy kod QR')
 
+
         if validated:
             try:
                 api.sendPostRequestToApi(SCANER_ID,data['employee_id'],datetime.now())

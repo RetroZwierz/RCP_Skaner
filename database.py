@@ -37,7 +37,7 @@ class Database:
         mysql_query = ("INSERT INTO rcp_rejestracje (nr_czytnika, nr_karty, czas, tryb, rodzaj, nr_ewidencyjny) "
                        "VALUES (%s, %s, %s, %s, 0, %s)")
         success_mysql = True
-        success_oracle = False 
+        success_oracle = False
         #success_mysql = self.mysql.execute(mysql_query, (SCANER_ID, card_id, now, action, employee_id))
         if success_mysql:
             success_oracle = self.oracle.execute(oracle_query, [SCANER_ID, card_id, now, action, employee_id])

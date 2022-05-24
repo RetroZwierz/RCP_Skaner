@@ -37,13 +37,15 @@ class Scanner:
                 now = now.strftime('%Y-%m-%d %H:%M:%S')
                 response = self.api.sendPostRequestToApi(SCANER_ID,data['employee_id'],now)
                 self.logger.log_Info("API Response: "+response+"\n")
+                json.loads(response)
+                return True, response['data']
             except requests.exceptions.ConnectionError as ex:
                 self.logger.log_Error("API Connection Error "+str(ex)+"\n")
                 self.buffer.add_to_buffer(data['employee_id'],SCANER_ID,now)
-                return 'Błąd połączenia z API'
+                return False, 'Błąd połączenia z API'
                 #print(buffer.red_from_buffer())
             except Exception as ex:
-                return str(ex)
+                return False, str(ex)
 
 
             

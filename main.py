@@ -16,8 +16,6 @@ class App(customtkinter.CTk):
     INITIAL_LABEL_COLOR = ("gray70", "gray25")
 
     APP_NAME = "GUI"
-    WIDTH = 900
-    HEIGHT = 600
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -59,25 +57,16 @@ class App(customtkinter.CTk):
             if length > 128:
                 self.code.set('')
             return
-        if code == 'g':
-            self.label_text.set('Zarejestrowano wejście')
+        success, message = self.scanner.scan(code)
+        if success:
+            self.label_text.set(message)
             self.label_1.configure(fg_color='green')
             self.label_1.update()
         else:
-            self.label_text.set('Brak dostępu')
-            self.label_1.configure(fg_color='red')
-            self.label_1.update()
-        message = self.scanner.scan(code)
-        if message != 'OK':
             self.label_text.set(message)
             self.label_1.configure(fg_color='red')
             self.label_1.update()
-        else:
-            self.label_text.set('Zarejestrowano wejście')
-            self.label_1.configure(fg_color='green')
-            self.label_1.update()
 
-        print(code)
         time.sleep(1)
         self.code.set('')
         self.label_text.set('Zeskanuj kod QR')

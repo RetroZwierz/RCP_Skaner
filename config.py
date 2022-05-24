@@ -2,18 +2,14 @@ SECRET_KEY = 'vpU=Xm=zAQEUoUOpXhJF4oRhJmCaTBTQQDwvH40L1lXT'
 SALT = 'UWZUaldtWnE0dDd3IXolQw=='
 IV = 'blpyNHU3eCFBJUQqRy1LYQ=='
 
-MYSQL_HOST = 'localhost'
-MYSQL_USER = 'kjrppo'
-MYSQL_PASSWORD = 'opprjk'
-MYSQL_DATABASE = 'enigma'
-
-ORACLE_USER = 'KJRPPO'
-ORACLE_PASSWORD = 'opprjk'
-ORACLE_HOST = '10.1.9.115'
-ORACLE_PORT = '1521'
-SERVICE_NAME = 'TEST'
-
 SCANER_ID = '2'
 
 ENTER = '2'
 LEAVE = '3'
+
+API_IP = '10.1.9.161'
+#API_IP = 'localhost'
+API_PORT = '5000'
+
+LOG_FILE = '/home/kuznia/skaner.log'
+SCAN_BUFOR_FILE ='/home/kuznia/buffer.txt'

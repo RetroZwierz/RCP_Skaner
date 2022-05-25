@@ -4,7 +4,6 @@ import requests, sys;
 class ScanerApi:
 
     def sendPostRequestToApi(self,scaner_id,employee_id,time):
-        print("TestAPI", file=sys.stderr)
         response = requests.post("http://"+API_IP+":"+API_PORT+"/scan/", data = {'scaner_id':scaner_id,'employee_id':employee_id,'date_time':time})
         return response.json()
 

@@ -1,10 +1,10 @@
-from config import SCANER_ID, LOG_FILE
+from config import SCANER_ID
 from decrypt import decryption
 from validate import validate_data
 from api import ScanerApi
 from datetime import datetime
 from scaner_logger import Scaner_Logger
-from buffer import Buffer
+from buffer import add_to_buffer, change_last_status
 import json
 import requests
 
@@ -13,13 +13,11 @@ class Scanner:
     def __init__(self):
         self.api = ScanerApi()
         self.logger = Scaner_Logger()
-        self.buffer = Buffer()
 
     def scan(self, qrcode):
         validated = False
         try:
             validated = False
-            print('Zeskanuj kod QR\n')
             data = decryption(qrcode)
             data = json.loads(data)
 
@@ -36,14 +34,20 @@ class Scanner:
                 now = datetime.now()
                 now = now.strftime('%Y-%m-%d %H:%M:%S')
                 response = self.api.sendPostRequestToApi(SCANER_ID,data['employee_id'],now)
-                self.logger.log_Info("API Response: "+response+"\n")
-                json.loads(response)
-                return True, response['data']
+                print(response)
+                self.logger.log_Info("API Response: "+json.dumps(response)+"\n")
+
+                if response['code'] == 200:
+                    change_last_status(data['employee_id'],response['status'])
+                    return True, response['data']
+                else: 
+                    return False, response['data']
             except requests.exceptions.ConnectionError as ex:
                 self.logger.log_Error("API Connection Error "+str(ex)+"\n")
-                self.buffer.add_to_buffer(data['employee_id'],SCANER_ID,now)
+                change_last_status(data['employee_id'],None)
+                add_to_buffer(data['employee_id'],SCANER_ID,now)
                 return False, 'Błąd połączenia z API'
-                #print(buffer.red_from_buffer())
+                #print(read_from_buffer())
             except Exception as ex:
                 return False, str(ex)
 

@@ -6,6 +6,8 @@ import time
 from PIL import Image, ImageTk
 import os
 from scanner import Scanner
+from scheduler import start_scheduled_jobs
+
 
 customtkinter.set_appearance_mode("Dark")
 customtkinter.set_default_color_theme("blue")
@@ -24,8 +26,10 @@ class App(customtkinter.CTk):
         self.WIDTH = int(width)
         self.HEIGHT = int(height)
         self.scanner=Scanner()
+        start_scheduled_jobs()
+
         self.title(App.APP_NAME)
-        self.geometry(f"{App.WIDTH}x{App.HEIGHT}")
+        self.geometry(f"{self.WIDTH}x{self.HEIGHT}")
 
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
 
@@ -67,7 +71,7 @@ class App(customtkinter.CTk):
             self.label_1.configure(fg_color='red')
             self.label_1.update()
 
-        time.sleep(1)
+        time.sleep(5)
         self.code.set('')
         self.label_text.set('Zeskanuj kod QR')
         self.label_1.configure(fg_color=App.INITIAL_LABEL_COLOR)

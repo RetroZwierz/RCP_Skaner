@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 from scaner_logger import Scaner_Logger
 
-
 def validate_data(data):
     now = datetime.now()
     creation_date = datetime.strptime(

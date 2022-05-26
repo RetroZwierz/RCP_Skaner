@@ -23,10 +23,10 @@ class Scanner:
 
             validated,validate_message = validate_data(data)
             if not validated:
-                return False, validate_message
+                return False, validate_message, None
 
         except TypeError and ValueError:
-            return False, 'Nieprawidłowy kod QR'
+            return False, 'Nieprawidłowy kod QR', None
 
 
         if validated:
@@ -39,22 +39,22 @@ class Scanner:
 
                 if response['code'] == 200:
                     change_last_status(data['employee_id'],response['status'])
-                    return True, response['data']
+                    return True, response['data'], data['employee_id']
                 else: 
-                    return False, response['data']
+                    return False, response['data'], data['employee_id']
             except requests.exceptions.ConnectionError as ex:
                 self.logger.log_Error("API Connection Error "+str(ex)+"\n")
                 change_last_status(data['employee_id'],None)
                 add_to_buffer(data['employee_id'],SCANER_ID,now)
                 last_status = check_last_status(data['employee_id'])
-                if last_status.strip() == ENTER:
-                    return True, 'Zarejestrowano czas wejścia.'
-                elif last_status.strip() == LEAVE:
-                    return True, 'Zarejestrowano czas wejścia.'
+                if last_status == ENTER:
+                    return True, 'Zarejestrowano czas wejścia.', data['employee_id']
+                elif last_status == LEAVE:
+                    return True, 'Zarejestrowano czas wyjścia.', data['employee_id']
                 else:
-                    return False, 'Błąd!'
+                    return False, 'Błąd komunikacji, spróbuj ponownie za chwilę.', None
             except Exception as ex:
-                return False, str(ex)
+                return False, str(ex), None
 
 
             

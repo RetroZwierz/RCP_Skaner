@@ -11,6 +11,13 @@ LEAVE = '3'
 API_IP = 'localhost'
 API_PORT = '5000'
 
-LOG_FILE = '/home/kuznia/skaner.log'
-SCAN_BUFOR_FILE ='/home/kuznia/buffer.txt'
-EMPLOYEE_LAST_STATUS ='/home/kuznia/employeelaststatus.txt'
+LOG_FILE = '../skaner.log'
+#Przechowuje dane ze skanowania nie wysłane na api
+SCAN_BUFOR_FILE ='../buffer.txt'
+#Przechowuje ostatni stan pracownika
+EMPLOYEE_LAST_STATUS ='../employeelaststatus.txt'
+
+#Co ile ma wysyłać informacje do api o aktywnośći
+HEART_BEAT_TIME = 1 #minutes
+#Co ile ma próbować wysłać dane ze skanowania które nie zostały wysłane na api przez zerwane połączenie
+SCAN_BUFFER_SEND_TIME = 60 #seconds

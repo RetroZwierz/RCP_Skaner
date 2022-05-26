@@ -4,7 +4,7 @@ from apscheduler.triggers.interval import IntervalTrigger
 from datetime import datetime
 from api import ScanerApi
 from buffer import read_from_buffer, change_last_status
-from config import SCAN_BUFOR_FILE
+from config import SCAN_BUFOR_FILE,HEART_BEAT_TIME,SCAN_BUFFER_SEND_TIME
 import fileinput, os, requests, sys
 import time
 
@@ -17,7 +17,7 @@ def start_scheduled_jobs():
     print("I'm working...")
 
 
-@scheduler.scheduled_job(IntervalTrigger(minutes=15))
+@scheduler.scheduled_job(IntervalTrigger(minutes=HEART_BEAT_TIME))
 def report_scanner_to_api():
     try:
         now = datetime.now()
@@ -27,7 +27,7 @@ def report_scanner_to_api():
         print(str(ex))
 
 
-@scheduler.scheduled_job(IntervalTrigger(seconds=5))
+@scheduler.scheduled_job(IntervalTrigger(seconds=SCAN_BUFFER_SEND_TIME))
 def send_data_from_buffer():
     if not os.path.exists(SCAN_BUFOR_FILE):
         os.mknod(SCAN_BUFOR_FILE)

@@ -43,8 +43,6 @@ def change_last_status(employee_id, new_status):
         f = open(EMPLOYEE_LAST_STATUS, "a")
         if not new_status == None:
             f.write(employee_id+", status="+new_status+"\n")
-        else:
-            f.write(employee_id+", status="+ENTER+"\n")
 
 
 def check_last_status(employee_id):

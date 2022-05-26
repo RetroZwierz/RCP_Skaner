@@ -7,8 +7,8 @@ SCANER_ID = '2'
 ENTER = '2'
 LEAVE = '3'
 
-API_IP = '19.1.9.162'
-#API_IP = '10.1.9.161'
+#API_IP = '19.1.9.162'
+API_IP = '10.1.9.161'
 #API_IP = 'localhost'
 API_PORT = '5000'
 

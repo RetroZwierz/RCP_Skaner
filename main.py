@@ -50,7 +50,7 @@ class App(customtkinter.CTk):
         self.label_1 = customtkinter.CTkLabel(width=200, height=100,
                                               fg_color=App.INITIAL_LABEL_COLOR, textvariable=self.label_text)
         self.label_1.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
-
+        self.label_1.configure(text_color='#bec1c2')
 
         self.entry_1.focus()
 
@@ -61,11 +61,16 @@ class App(customtkinter.CTk):
             if length > 128:
                 self.code.set('')
             return
-        success, message = self.scanner.scan(code)
+        success, message, employee_id = self.scanner.scan(code)
         if success:
-            self.label_text.set(message)
-            self.label_1.configure(fg_color='green')
-            self.label_1.update()
+            self.label_text.set(message + "\n ID: " + employee_id)
+            if message == "Zarejestrowano czas wejścia.":
+                self.label_1.configure(fg_color='green')
+                self.label_1.update()
+            if message == "Zarejestrowano czas wyjścia.":
+                self.label_1.configure(fg_color='yellow')
+                self.label_1.configure(text_color='black')
+                self.label_1.update()
         else:
             self.label_text.set(message)
             self.label_1.configure(fg_color='red')
@@ -75,6 +80,8 @@ class App(customtkinter.CTk):
         self.code.set('')
         self.label_text.set('Zeskanuj kod QR')
         self.label_1.configure(fg_color=App.INITIAL_LABEL_COLOR)
+        self.label_1.configure(text_color='#bec1c2')
+
 
     def on_closing(self, event=0):
         self.destroy()

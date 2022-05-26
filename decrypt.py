@@ -21,4 +21,5 @@ def decryption(encrypted_string):
     )
     cipher = AES.new(decryption_key, AES.MODE_CBC, iv)
     decrypted_string = unpad(cipher.decrypt(encrypted_string), AES.block_size)
+
     return decrypted_string.decode('UTF-8')

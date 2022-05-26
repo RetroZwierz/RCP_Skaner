@@ -19,6 +19,7 @@ def send_from_buffer():
     if not os.path.exists(SCAN_BUFOR_FILE):
         os.mknod(SCAN_BUFOR_FILE)
     api_work = True
+    #print("test")
     for line in fileinput.input(SCAN_BUFOR_FILE, inplace=1):
         if not api_work:
             print(line.replace('\n',''))
@@ -30,6 +31,10 @@ def send_from_buffer():
                 continue
             try:
                 response = api.sendPostRequestToApi(values[1], values[0], values[2].replace('\n',''))
+                if response == None:
+                    print(line.replace('\n',''))
+                    api_work = False
+                    continue
             except requests.exceptions.ConnectionError as ex:
                 print(line.replace('\n',''))
                 api_work = False

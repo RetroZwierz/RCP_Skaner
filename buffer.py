@@ -1,7 +1,10 @@
 from config import SCAN_BUFOR_FILE, EMPLOYEE_LAST_STATUS, ENTER, LEAVE
 import fileinput
 import os, sys
+import fileinput, os, requests, sys
+from api import ScanerApi
 
+api = ScanerApi()
 
 def add_to_buffer(employee_id, scaner_id, scan_time):
     f = open(SCAN_BUFOR_FILE, "a")
@@ -12,6 +15,32 @@ def read_from_buffer():
     f = open(SCAN_BUFOR_FILE, "r")
     return f.read().split("\n")
 
+def send_from_buffer():
+    if not os.path.exists(SCAN_BUFOR_FILE):
+        os.mknod(SCAN_BUFOR_FILE)
+    api_work = True
+    for line in fileinput.input(SCAN_BUFOR_FILE, inplace=1):
+        if not api_work:
+            print(line.replace('\n',''))
+            continue
+        
+        if True:
+            values = line.split(", ")
+            if not len(values) == 3:
+                continue
+            try:
+                response = api.sendPostRequestToApi(values[1], values[0], values[2].replace('\n',''))
+            except requests.exceptions.ConnectionError as ex:
+                print(line.replace('\n',''))
+                api_work = False
+                continue
+            except Exception as ex:
+                print("TestEXc " + ex, file=sys.stderr)
+            if not response['code'] == 200:
+                print(line)
+                
+    #print("Test8", file=sys.stderr)
+    fileinput.close()
 
 def change_last_status(employee_id, new_status):
     if not os.path.exists(EMPLOYEE_LAST_STATUS):

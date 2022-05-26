@@ -1,6 +1,6 @@
 from config import SCAN_BUFOR_FILE, EMPLOYEE_LAST_STATUS, ENTER, LEAVE
 import fileinput
-import os
+import os, sys
 
 
 def add_to_buffer(employee_id, scaner_id, scan_time):
@@ -17,7 +17,6 @@ def change_last_status(employee_id, new_status):
     if not os.path.exists(EMPLOYEE_LAST_STATUS):
         os.mknod(EMPLOYEE_LAST_STATUS)
     found = False
-
     for line in fileinput.input(EMPLOYEE_LAST_STATUS, inplace=1):
         if not line == "":
             values = line.split(", ")
@@ -53,6 +52,6 @@ def check_last_status(employee_id):
     lines = f.read().split("\n")
     for line in lines:
         if not line == "":
-            values = line.split(", ")
+            values = line.split(", status=")
             if values[0] == employee_id:
-                return values[1]
+                return values[1].strip()

@@ -49,14 +49,8 @@ def send_data_from_buffer():
                 continue
             except Exception as ex:
                 print("TestEXc " + ex, file=sys.stderr)
-            if response['code'] == 200:
-                print("Test5", file=sys.stderr)
-                #change_last_status(values[0], response['status'])
-            else:
+            if not response['code'] == 200:
                 print(line)
-    print("Test8", file=sys.stderr)
-    time.sleep(10)
+                
+    #print("Test8", file=sys.stderr)
     fileinput.close()
-    print("Close")
-
-    print("send scans stop")

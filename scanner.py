@@ -1,10 +1,10 @@
-from config import SCANER_ID
+from config import SCANER_ID, ENTER, LEAVE
 from decrypt import decryption
 from validate import validate_data
 from api import ScanerApi
 from datetime import datetime
 from scaner_logger import Scaner_Logger
-from buffer import add_to_buffer, change_last_status
+from buffer import add_to_buffer, change_last_status, check_last_status
 import json
 import requests
 
@@ -46,8 +46,13 @@ class Scanner:
                 self.logger.log_Error("API Connection Error "+str(ex)+"\n")
                 change_last_status(data['employee_id'],None)
                 add_to_buffer(data['employee_id'],SCANER_ID,now)
-                return False, 'Błąd połączenia z API'
-                #print(read_from_buffer())
+                last_status = check_last_status(data['employee_id'])
+                if last_status.strip() == ENTER:
+                    return True, 'Zarejestrowano czas wejścia.'
+                elif last_status.strip() == LEAVE:
+                    return True, 'Zarejestrowano czas wejścia.'
+                else:
+                    return False, 'Błąd!'
             except Exception as ex:
                 return False, str(ex)
 

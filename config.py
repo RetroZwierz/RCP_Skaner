@@ -21,4 +21,4 @@ EMPLOYEE_LAST_STATUS ='/home/kuznia/employeelaststatus.txt'
 #Co ile ma wysyłać informacje do api o aktywnośći
 HEART_BEAT_TIME = 15 #minutes
 #Co ile ma próbować wysłać dane ze skanowania które nie zostały wysłane na api przez zerwane połączenie
-SCAN_BUFFER_SEND_TIME = 3 #seconds
+SCAN_BUFFER_SEND_TIME = 60 #seconds

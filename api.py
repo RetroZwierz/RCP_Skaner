@@ -5,16 +5,11 @@ import socket
 class ScanerApi:
 
     def sendPostRequestToApi(self,scaner_id,employee_id,time):
-        if not self.checkHost():
-            return None
-        
-        response = requests.post("http://"+API_IP+":"+API_PORT+"/scan/", data = {'scaner_id':scaner_id,'employee_id':employee_id,'date_time':time})
+        response = requests.post("http://"+API_IP+":"+API_PORT+"/scan/", data = {'scaner_id':scaner_id,'employee_id':employee_id,'date_time':time}, timeout=2)
         return response.json()
 
     def sendScannerReport(self,time):
-        if not self.checkHost():
-            return None
-        response = requests.post("http://"+API_IP+":"+API_PORT+"/scannerreport/", data = {'scaner_id':SCANER_ID,'date_time':time})
+        response = requests.post("http://"+API_IP+":"+API_PORT+"/scannerreport/", data = {'scaner_id':SCANER_ID,'date_time':time}, timeout=2)
         return response.json()
 
     def sendTestRequestToApi():

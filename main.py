@@ -49,11 +49,10 @@ class App(customtkinter.CTk):
         image = Image.open(PATH + "/images/kjlogo.png").resize((self.WIDTH, self.HEIGHT))
         self.bg_image = ImageTk.PhotoImage(image)
 
-        self.code = tkinter.StringVar()
-        self.code.trace("w", lambda name, index, mode, sv=self.code: self.input_callback())
-        self.entry_1 = tkinter.Entry(textvariable=self.code)
+        self.entry_1 = tkinter.Text()
         self.entry_1.place(relx=0.5, rely=0.5)
-
+        self.entry_1.bind('<Return>',lambda event: self.input_callback())
+        
         self.image_label = tkinter.Label(master=self, image=self.bg_image)
         self.image_label.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
 
@@ -75,12 +74,11 @@ class App(customtkinter.CTk):
         self.entry_1.focus()
 
     def input_callback(self):
-        code = self.code.get()
-        length = len(code)
-        if length != 128:
-            if length > 128:
-                self.code.set('')
+        code = self.entry_1.get("1.0","end")
+        if not '\n' in code:
+            self.entry_1.delete("1.0","end")
             return
+            
         success, message, employee_id = self.scanner.scan(code)
         self.label_text_2 = tkinter.StringVar()
         self.label_text_2.set("")
@@ -105,7 +103,7 @@ class App(customtkinter.CTk):
             self.label_2.update()
 
         self.label_2.after(5000, self.label_2.destroy)
-        self.code.set('')
+        self.entry_1.delete("1.0","end")
 
     def on_closing(self, event=0):
         self.destroy()

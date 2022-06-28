@@ -108,7 +108,7 @@ class App(customtkinter.CTk):
                     self.label_2.config(text_color='black')
                     self.label_2.update()
                 else:
-                    self.label_text_2.set(message)
+                    self.label_text_2.set(message + "\n ID: " + employee_id)
                     self.label_2.config(fg_color='gray')
                     self.label_2.config(text_color='black')
                     self.label_2.update()

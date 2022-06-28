@@ -52,7 +52,7 @@ class App(customtkinter.CTk):
         self.entry_1 = tkinter.Text()
         self.entry_1.place(relx=0.5, rely=0.5)
         self.entry_1.bind('<Return>',lambda event: self.input_callback())
-
+        
         self.image_label = tkinter.Label(master=self, image=self.bg_image)
         self.image_label.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
 
@@ -78,7 +78,7 @@ class App(customtkinter.CTk):
         if not '\n' in code:
             self.entry_1.delete("1.0","end")
             return
-
+            
         success, message, employee_id = self.scanner.scan(code)
         self.label_text_2 = tkinter.StringVar()
         self.label_text_2.set("")
@@ -97,6 +97,21 @@ class App(customtkinter.CTk):
                 self.label_2.config(fg_color='yellow')
                 self.label_2.config(text_color='black')
                 self.label_2.update()
+        elif "Podwójny skan " in message:
+                if "Wejście" in message:
+                    self.label_text_2.set(message + "\n ID: " + employee_id)
+                    self.label_2.config(fg_color='green')
+                    self.label_2.update()
+                elif "Wyjście" in message:
+                    self.label_text_2.set(message + "\n ID: " + employee_id)
+                    self.label_2.config(fg_color='yellow')
+                    self.label_2.config(text_color='black')
+                    self.label_2.update()
+                else:
+                    self.label_text_2.set(message + "\n ID: " + employee_id)
+                    self.label_2.config(fg_color='gray')
+                    self.label_2.config(text_color='black')
+                    self.label_2.update()
         else:
             self.label_text_2.set(message)
             self.label_2.config(fg_color='red')

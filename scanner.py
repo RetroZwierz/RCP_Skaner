@@ -49,7 +49,7 @@ class Scanner:
                 self.last_scan_time = now
                 self.last_scan_code = qrcode
                 now = now.strftime('%Y-%m-%d %H:%M:%S')
-                
+
                 response = self.api.sendPostRequestToApi(SCANER_ID,data['employee_id'],now)
 
                 if response == None:
@@ -70,7 +70,7 @@ class Scanner:
                 if response['code'] == 200:
                     change_last_status(data['employee_id'],response['status'])
                     return True, response['data'], data['employee_id']
-                else: 
+                else:
                     return False, response['data'], data['employee_id']
 
             except requests.exceptions.ConnectionError as ex:
@@ -97,7 +97,3 @@ class Scanner:
                     return False, 'Błąd komunikacji, spróbuj ponownie za chwilę.', None
             except Exception as ex:
                 return False, str(ex), None
-
-
-            
-

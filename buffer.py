@@ -39,6 +39,10 @@ def send_from_buffer():
                 print(line.replace('\n',''))
                 api_work = False
                 continue
+            except requests.Timeout as ex:
+                print(line.replace('\n',''))
+                api_work = False
+                continue
             except Exception as ex:
                 print("TestEXc " + ex, file=sys.stderr)
             if not response['code'] == 200:

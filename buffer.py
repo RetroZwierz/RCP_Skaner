@@ -24,7 +24,7 @@ def send_from_buffer():
         if not api_work:
             print(line.replace('\n',''))
             continue
-        
+
         if True:
             values = line.split(", ")
             if not len(values) == 3:
@@ -47,7 +47,7 @@ def send_from_buffer():
                 print("TestEXc " + ex, file=sys.stderr)
             if not response['code'] == 200:
                 print(line)
-                
+
     #print("Test8", file=sys.stderr)
     fileinput.close()
 

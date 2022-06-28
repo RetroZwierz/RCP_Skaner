@@ -15,7 +15,7 @@ class ScanerApi:
     def sendTestRequestToApi():
         response = requests.get("http://"+API_IP+":"+API_PORT+"/test/")
         print(response.json())
-    
+
     def checkHost(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.settimeout(1)

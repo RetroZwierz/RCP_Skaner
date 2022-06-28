@@ -4,8 +4,8 @@ import socket
 
 class ScanerApi:
 
-    def sendPostRequestToApi(self,scaner_id,employee_id,time):
-        response = requests.post("http://"+API_IP+":"+API_PORT+"/scan/", data = {'scaner_id':scaner_id,'employee_id':employee_id,'date_time':time}, timeout=2)
+    def sendPostRequestToApi(self,scaner_id,card_id,time):
+        response = requests.post("http://"+API_IP+":"+API_PORT+"/scan/", data = {'scaner_id':scaner_id,'card_id':card_id,'date_time':time}, timeout=2)
         return response.json()
 
     def sendScannerReport(self,time):

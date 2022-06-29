@@ -49,6 +49,7 @@ class Scanner:
                 self.last_scan_time = now
                 self.last_scan_code = qrcode
                 now = now.strftime('%Y-%m-%d %H:%M:%S')
+                
                 response = self.api.sendPostRequestToApi(SCANER_ID,data['employee_id'],now)
 
                 if response == None:

@@ -77,6 +77,7 @@ class App(customtkinter.CTk):
         if not '\n' in code:
             self.entry_1.delete("1.0","end")
             return
+            
         success, message, employee_id = self.scanner.scan(code)
         self.label_text_2 = tkinter.StringVar()
         self.label_text_2.set("")
